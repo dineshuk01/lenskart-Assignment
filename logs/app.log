@@ -1,0 +1,11 @@
+2025-12-28T06:34:52.377Z [INFO] Server listening on port 3000 
+2025-12-28T06:35:26.719Z [INFO] Server listening on port 3000 
+2025-12-28T07:47:30.118Z [INFO] Server listening on port 3000 
+2025-12-28T08:26:35.568Z [INFO] Delivery confirmed: SHIP001 by Agent_Rahul 
+2025-12-28T08:27:16.893Z [INFO] Delivery attempt failed - invalid OTP for SHIP002 by Agent_Test 
+2025-12-28T08:27:32.353Z [INFO] Delivery attempt ignored - already delivered: SHIP001 by Agent_Someone 
+2025-12-28T08:27:48.820Z [INFO] Delivery attempt failed - invalid shipment: SHIP999 by Agent_Test 
+2025-12-28T08:29:36.600Z [INFO] Delivery attempt failed - invalid shipment: SHIP999 by Agent_Test 
+2025-12-28T08:29:44.760Z [INFO] Delivery attempt ignored - already delivered: SHIP001 by Agent_Someone 
+2025-12-28T08:38:55.238Z [INFO] Delivery attempt ignored - already delivered: SHIP001 by Agent_Someone 
+2025-12-28T10:20:12.984Z [INFO] Server listening on port 3000 
