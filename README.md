@@ -1,6 +1,6 @@
 # Last-Mile Delivery Confirmation System
 
-## 📖 Table of Contents
+##  Table of Contents
 1. [Project Overview](#project-overview)
 2. [What Problem Does This Solve?](#what-problem-does-this-solve)
 3. [System Architecture](#system-architecture)
@@ -10,13 +10,10 @@
 7. [Understanding the Code](#understanding-the-code)
 8. [Testing the Application](#testing-the-application)
 9. [Android App Setup](#android-app-setup)
-10. [Troubleshooting](#troubleshooting)
-11. [Production Deployment](#production-deployment)
-12. [API Documentation](#api-documentation)
 
 ---
 
-## 📋 Project Overview
+##  Project Overview
 
 **Last-Mile Delivery Confirmation System** is a complete 3-tier application designed for logistics companies to securely confirm package deliveries using OTP (One-Time Password) verification.
 
@@ -33,7 +30,7 @@ Imagine a delivery company like Amazon, FedEx, or Flipkart:
 
 ---
 
-## 🎯 What Problem Does This Solve?
+##  What Problem Does This Solve?
 
 ### **Problems:**
 1. ❌ **Delivery Fraud:** Agents marking deliveries as complete without actually delivering
@@ -50,7 +47,7 @@ Imagine a delivery company like Amazon, FedEx, or Flipkart:
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 
 ### **3-Tier Architecture Explained**
 
@@ -108,7 +105,7 @@ Imagine a delivery company like Amazon, FedEx, or Flipkart:
 
 ---
 
-## 💻 Technology Stack
+##  Technology Stack
 
 ### **Backend:**
 - **Node.js** (v18+): JavaScript runtime for server-side code
@@ -133,7 +130,7 @@ Imagine a delivery company like Amazon, FedEx, or Flipkart:
 
 ---
 
-## 🔧 Prerequisites Installation
+##  Prerequisites Installation
 
 ### **1. Install Node.js (JavaScript Runtime)**
 
@@ -239,7 +236,7 @@ VS Code is a powerful, free code editor by Microsoft.
 
 ---
 
-## 🚀 Project Setup - Step by Step
+##  Project Setup - Step by Step
 
 ### **STEP 1: Create Project Structure**
 
@@ -446,7 +443,7 @@ DB_PORT=3306
 LOG_LEVEL=info
 ```
 
-**⚠️ IMPORTANT:** 
+** IMPORTANT:** 
 - Replace `your_mysql_password_here` with your actual MySQL password
 - **Never commit .env file to Git** (contains sensitive passwords)
 
@@ -841,7 +838,7 @@ Keep this terminal window open. The server must stay running to accept requests.
 
 ---
 
-## 🧪 Testing the Application
+##  Testing the Application
 
 ### **Test 1: Health Check**
 
@@ -1161,177 +1158,6 @@ class MainActivity : AppCompatActivity() {
 }
 ```
 
-**Key Android Concepts:**
-
-1. **Threads:**
-   - **Main/UI Thread**: Where UI updates happen
-   - **Background Thread**: Where network calls happen
-   - Can't do network on UI thread (crashes app)
-
-2. **Coroutines:**
-   - Modern way to handle async operations
-   - `Dispatchers.IO`: Background thread for I/O operations
-   - `Dispatchers.Main`: UI thread
-   - `withContext`: Switch between threads
-
-3. **10.0.2.2:**
-   - Special IP for Android emulator
-   - Points to host machine's localhost
-   - For physical device, use computer's actual IP (e.g., 192.168.1.100)
-
-### **STEP 6: Build and Run**
-
-1. Click **▶ Run** button (green triangle)
-2. Select your emulator or device
-3. Wait for app to install and launch
-
-### **STEP 7: Test the App**
-
-**Test Case 1: Valid Delivery**
-1. Enter: `SHIP002`
-2. Enter OTP: `987654`
-3. Enter Name: `Agent_Priya`
-4. Click **Confirm Delivery**
-5. Should show: ✅ SUCCESS
-
-**Test Case 2: Invalid OTP**
-1. Enter: `SHIP003`
-2. Enter OTP: `000000` (wrong)
-3. Enter Name: `Agent_Test`
-4. Click **Confirm Delivery**
-5. Should show: ❌ Invalid OTP
-
----
-
-## 🐛 Troubleshooting
-
-### **Backend Issues**
-
-#### Problem: `Cannot find module 'express'`
-**Solution:**
-```bash
-cd backend
-npm install
-```
-
-#### Problem: `ER_ACCESS_DENIED_ERROR`
-**Solution:** Wrong MySQL password in `.env` file. Fix the password and restart server.
-
-#### Problem: `EADDRINUSE: address already in use`
-**Solution:** Port 3000 is busy.
-```bash
-# Windows
-netstat -ano | findstr :3000
-taskkill /PID <PID_NUMBER> /F
-
-# Linux/Mac
-lsof -ti:3000 | xargs kill -9
-```
-
-#### Problem: `logs` folder not found
-**Solution:**
-```bash
-mkdir logs
-```
-
-### **Database Issues**
-
-#### Problem: Can't connect to MySQL
-**Solution:**
-1. Check MySQL is running:
-   - Windows: Services → MySQL80 → Start
-   - Mac: `brew services start mysql`
-   - Linux: `sudo systemctl start mysql`
-
-#### Problem: `ER_NO_SUCH_TABLE: Table 'shipments' doesn't exist`
-**Solution:** Run SQL script:
-```bash
-mysql -u root -p < models\shipment.sql
-```
-
-### **Android Issues**
-
-#### Problem: `CLEARTEXT communication not permitted`
-**Solution:** Add to `AndroidManifest.xml`:
-```xml
-<application android:usesCleartextTraffic="true" ...>
-```
-
-#### Problem: Network Error / Can't connect
-**Solutions:**
-1. Make sure backend is running (`npm run dev`)
-2. For emulator: Use `http://10.0.2.2:3000`
-3. For physical device: Use your computer's IP
-   ```kotlin
-   // Find your IP: ipconfig (Windows) or ifconfig (Mac/Linux)
-   .url("http://192.168.1.100:3000/api/deliveries/confirm")
-   ```
-4. Check firewall allows port 3000
-
-#### Problem: App crashes on button click
-**Solution:** Check Android Studio Logcat for error. Common causes:
-- Missing internet permission
-- Wrong URL format
-- Not handling exceptions
-
----
-
-## 🚀 Production Deployment
-
-### **Security Improvements**
-
-1. **Use HTTPS** (not HTTP)
-2. **Add JWT Authentication** for agents
-3. **Hash OTP codes** in database
-4. **Add rate limiting** to prevent abuse
-5. **Use environment-specific configs**
-6. **Add OTP expiry** (time-based)
-7. **Implement CSRF protection**
-
-### **Deploy Backend**
-
-**Option 1: Heroku**
-```bash
-# Install Heroku CLI
-heroku login
-heroku create last-mile-api
-
-# Add MySQL addon
-heroku addons:create cleardb:ignite
-
-# Deploy
-git push heroku main
-```
-
-**Option 2: AWS EC2**
-1. Launch Ubuntu EC2 instance
-2. Install Node.js and MySQL
-3. Copy code to server
-4. Set up environment variables
-5. Use PM2 to keep server running
-
-**Option 3: DigitalOcean**
-1. Create droplet (Ubuntu)
-2. Install dependencies
-3. Configure firewall
-4. Use Nginx as reverse proxy
-
-### **Deploy Android App**
-
-1. **Generate signed APK:**
-   - Build → Generate Signed Bundle/APK
-   - Create keystore
-   - Build release APK
-
-2. **Test on physical device**
-
-3. **Publish to Google Play:**
-   - Create developer account ($25 one-time)
-   - Upload APK
-   - Fill store listing
-   - Submit for review
-
----
 
 ## 📚 API Documentation
 
@@ -1414,26 +1240,6 @@ Content-Type: application/json
 
 ---
 
-## 🎓 Learning Resources
-
-### **Node.js & Express**
-- Official Docs: https://nodejs.org/docs
-- Express Guide: https://expressjs.com/en/guide/routing.html
-- MDN Web Docs: https://developer.mozilla.org/en-US/docs/Learn/Server-side/Express_Nodejs
-
-### **MySQL**
-- MySQL Tutorial: https://www.mysqltutorial.org/
-- W3Schools SQL: https://www.w3schools.com/sql/
-
-### **Android Development**
-- Official Android Docs: https://developer.android.com/
-- Kotlin Tutorial: https://kotlinlang.org/docs/tutorials/
-- Material Design: https://material.io/design
-
-### **REST APIs**
-- REST API Tutorial: https://restfulapi.net/
-- HTTP Status Codes: https://httpstatuses.com/
-
 ---
 
 ## 📝 Project Structure Summary
@@ -1464,82 +1270,9 @@ last-mile-delivery/
         │   │   └── res/layout/activity_main.xml
         │   └── build.gradle
         └── build.gradle
+
 ```
 
----
 
-## ✅ Final Checklist
 
-### **Backend Setup**
-- [ ] Node.js installed (v18+)
-- [ ] MySQL installed and running
-- [ ] Database created with test data
-- [ ] Dependencies installed (`npm install`)
-- [ ] `.env` file configured with correct password
-- [ ] Server starts successfully (`npm run dev`)
-- [ ] Health check works (`curl http://localhost:3000/health`)
-- [ ] Can confirm delivery via curl/Postman
 
-### **Android Setup**
-- [ ] Android Studio installed
-- [ ] Project created with correct package name
-- [ ] Dependencies synced
-- [ ] Internet permission added
-- [ ] Layout created with input fields
-- [ ] MainActivity code implemented
-- [ ] App builds without errors
-- [ ] Emulator running
-- [ ] App connects to backend successfully
-
-### **Testing**
-- [ ] Successful delivery confirmation works
-- [ ] Invalid OTP rejected
-- [ ] Already delivered detection works
-- [ ] Shipment not found returns 404
-- [ ] Database updated correctly
-- [ ] Logs created (app.log and access.log)
-
----
-
-## 🎉 Congratulations!
-
-You've built a complete, production-ready 3-tier delivery confirmation system!
-
-**What you learned:**
-- ✅ Building REST APIs with Node.js and Express
-- ✅ Database design and SQL
-- ✅ Transaction management
-- ✅ Error handling and logging
-- ✅ Android app development with Kotlin
-- ✅ HTTP communication between mobile app and backend
-- ✅ Security best practices
-- ✅ Testing and debugging
-
-**Next Steps:**
-1. Add more features (track delivery location, photo proof)
-2. Implement agent authentication
-3. Create admin dashboard
-4. Deploy to production
-5. Add push notifications
-6. Implement real-time tracking
-
----
-
-## 📞 Support
-
-If you encounter issues:
-1. Check troubleshooting section above
-2. Review logs (`app.log`, `access.log`)
-3. Verify all prerequisites are installed
-4. Ensure MySQL is running
-5. Check .env file configuration
-
----
-
-## 📄 License
-
-This project is open-source and available for educational purposes.
-
----
-
-**Built with ❤️ for learning backend and Android development**
